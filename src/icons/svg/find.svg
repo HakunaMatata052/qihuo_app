@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="find" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1024 1024" style="enable-background:new 0 0 1024 1024;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill-rule:evenodd;clip-rule:evenodd;fill:#8D9AB7;}
+</style>
+<g id="bg">
+	<g>
+		<path d="M512,72C222.3,72,72,222.3,72,512c0,289.7,150.3,440,440,440c289.7,0,440-150.3,440-440C952,222.3,801.7,72,512,72z"/>
+	</g>
+</g>
+<g id="find_1_">
+	<g>
+		<path class="st0" d="M281.9,503.4c0,134.1,109.9,243.8,244.1,243.8c70.8,0,134.3-30.5,178.2-78L360,325.4
+			C312.4,370.5,281.9,432.7,281.9,503.4z M506.5,293.7h-2.4v32.9c2.4,1.2,3.7,1.2,3.7,1.2c111.1,0,201.4,90.2,201.4,201.1v8.5h33
+			V529C742.1,399.8,637.1,293.7,506.5,293.7z M677.4,538.8v-8.5c0-93.9-75.7-169.4-169.7-169.4h-2.4v32.9h2.4
+			c75.7,0,136.7,61,136.7,136.5v8.5H677.4z"/>
+	</g>
+</g>
+</svg>
