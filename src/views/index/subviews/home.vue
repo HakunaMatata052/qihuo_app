@@ -50,7 +50,7 @@
           <th width="20%">成交量</th>
           <th width="25%">涨跌幅</th>
         </tr>
-        <tr @click="$router.push('/quotationDetail/1')">
+        <tr @click="$router.push('/quotationDetail/'+data.id)">
           <td>
             {{data.name}}
             <small>{{data.code}}</small>
@@ -132,6 +132,7 @@ export default {
       //但是点击某个列表时，会发送给后台一个标识，后台根据此标识返回相对应的数据，
       //这个时候数据就只能从一个出口出，所以让后台加了一个键，例如键为1时，是每隔1秒推送的数据，为2时是发送标识后再推送的数据，以作区分
       var data = JSON.parse(e.data)
+      data.id = data.symbol.slice(-1,4)
       if(data.last_price>this.data.last_price){
         data.zd = "zhang"
       }else{

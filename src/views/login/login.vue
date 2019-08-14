@@ -10,7 +10,8 @@
             clearable
             placeholder="请输入手机号"
             class="field"
-            type="tel"
+            type="number"
+            pattern="[0-9]*"
             :border="false"
           >
             <template slot="left-icon">
@@ -62,9 +63,9 @@ export default {
       loginLoading: false
     };
   },
-  created(){
-    if(this.$METHOD.getStore('token')){
-      this.$router.push('/')
+  created() {
+    if (this.$METHOD.getStore("token")) {
+      this.$router.push("/");
     }
     if (window.navigator.userAgent.match(/APICloud/i)) {
       api.setStatusBarStyle({
@@ -75,20 +76,23 @@ export default {
   },
   methods: {
     loginFn() {
-      var that = this
+      var that = this;
       that.loginLoading = true;
-      that.$SERVER.login(that.form).then((res) => {
-        that.$toast.success("登录成功");
-        that.$METHOD.setStore('token',res.data.userinfo.token)
-        that.$METHOD.setStore('userInfo',res.data.userinfo)
-        that.$store.state.token = res.data.userinfo.token
-        that.$store.state.userInfo = res.data.userinfo
-        that.loginLoading = false;
-        that.$router.go(-1);
-        console.log(11)
-      }).catch(res=>{
-        that.loginLoading = false;
-      });
+      that.$SERVER
+        .login(that.form)
+        .then(res => {
+          that.$toast.success("登录成功");
+          that.$METHOD.setStore("token", res.data.userinfo.token);
+          that.$METHOD.setStore("userInfo", res.data.userinfo);
+          that.$store.state.token = res.data.userinfo.token;
+          that.$store.state.userInfo = res.data.userinfo;
+          that.loginLoading = false;
+          that.$router.go(-1);
+          console.log(11);
+        })
+        .catch(res => {
+          that.loginLoading = false;
+        });
     }
   }
 };
@@ -103,7 +107,7 @@ export default {
 #login {
   width: 100%;
   height: 100%;
-  background: url('../../assets/images/login-bg.jpg') no-repeat center center;
+  background: url("../../assets/images/login-bg.jpg") no-repeat center center;
   background-size: cover;
   .login {
     width: 100%;

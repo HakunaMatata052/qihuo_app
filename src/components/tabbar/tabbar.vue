@@ -12,7 +12,7 @@
             :icon-class="$store.state.tabActiveIndex === index ? item.icon_press : item.icon"
             v-if="item.icon"
             slot="right"
-          ></svg-icon>
+          />
           <h3 :class="item.icon ? 'tabbar-name' : 'iconShow'">{{ item.title }}</h3>
         </li>
       </ul>

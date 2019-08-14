@@ -9,7 +9,6 @@ if (process.env.NODE_ENV === "production") {
 }
 if (process.env.NODE_ENV === "development") {
   // 干一些测试时不可告人的事情
-  // baseURL = "http://192.168.0.108:11000/game/";
-  baseURL = "http://192.168.0.107/api/";
+  baseURL = "http://192.168.0.121/api/";
 }
 export default { baseURL };

@@ -11,30 +11,34 @@ export default {
       rawData: [],
       myChart: null,
       option: {
-        upColor: "#00da3c",
-        downColor: "#ec0000"
-      }
-    };
-  },
-  watch: {
-    data(newval) {
-      let arrayData = [];
-      var that = this;
-      arrayData.push(newval.datetime.split(" ")[0]);
-      arrayData.push(newval.open);
-      arrayData.push(newval.close);
-      arrayData.push(newval.lowest);
-      arrayData.push(newval.highest);
-      arrayData.push(168890000);
-      that.rawData.push(arrayData);
-      var data = that.splitData(JSON.parse(JSON.stringify(that.rawData)));
-      console.log(data)
-      that.drawKline({
+        textStyle: {
+          color: "#fff"
+        },
+        animation: true,
+        dataZoom: [
+          {
+            type: "inside",
+            xAxisIndex: [0, 1],
+            start: 80,
+            end: 100
+          },
+          {
+            show: false,
+            xAxisIndex: [0, 1],
+            type: "slider",
+            top: "85%",
+            start: 80,
+            end: 100
+          }
+        ],
         animation: false,
         legend: {
           bottom: 10,
           left: "center",
-          data: ["Dow-Jones index", "MA5", "MA10", "MA20", "MA30"]
+          data: ["Dow-Jones index", "MA5", "MA10", "MA20", "MA30"],
+          textStyle: {
+            color: "#fff"
+          }
         },
         tooltip: {
           trigger: "axis",
@@ -68,11 +72,11 @@ export default {
           pieces: [
             {
               value: 1,
-              color: that.option.downColor
+              color: "#ec0000"
             },
             {
               value: -1,
-              color: that.option.upColor
+              color: "#00da3c"
             }
           ]
         },
@@ -92,7 +96,7 @@ export default {
         xAxis: [
           {
             type: "category",
-            data: data.categoryData,
+            data: [],
             scale: true,
             boundaryGap: false,
             axisLine: { onZero: false },
@@ -103,14 +107,14 @@ export default {
             axisPointer: {
               z: 100
             },
-          textStyle: {
-            color: "#fff"
-          },
+            textStyle: {
+              color: "#fff"
+            }
           },
           {
             type: "category",
             gridIndex: 1,
-            data: data.categoryData,
+            data: [],
             scale: true,
             boundaryGap: false,
             axisLine: { onZero: false },
@@ -120,9 +124,9 @@ export default {
             splitNumber: 20,
             min: "dataMin",
             max: "dataMax",
-          textStyle: {
-            color: "#fff"
-          },
+            textStyle: {
+              color: "#fff"
+            }
           }
         ],
         yAxis: [
@@ -142,31 +146,15 @@ export default {
             splitLine: { show: false }
           }
         ],
-        dataZoom: [
-          {
-            type: "inside",
-            xAxisIndex: [0, 1],
-            start: 50,
-            end: 100
-          },
-          {
-            show: true,
-            xAxisIndex: [0, 1],
-            type: "slider",
-            top: "85%",
-            start: 50,
-            end: 100
-          }
-        ],
         series: [
           {
             name: "Dow-Jones index",
             type: "candlestick",
-            data: data.values,
+            data: [],
             itemStyle: {
               normal: {
-                color: that.option.upColor,
-                color0: that.option.downColor,
+                color: "#00da3c",
+                color0: "#ec0000",
                 borderColor: null,
                 borderColor0: null
               }
@@ -187,7 +175,7 @@ export default {
           {
             name: "MA5",
             type: "line",
-            data: this.calculateMA(5, data),
+            data: [],
             smooth: true,
             lineStyle: {
               normal: { opacity: 0.5 }
@@ -196,7 +184,7 @@ export default {
           {
             name: "MA10",
             type: "line",
-            data: this.calculateMA(10, data),
+            data: [],
             smooth: true,
             lineStyle: {
               normal: { opacity: 0.5 }
@@ -205,7 +193,7 @@ export default {
           {
             name: "MA20",
             type: "line",
-            data: this.calculateMA(20, data),
+            data: [],
             smooth: true,
             lineStyle: {
               normal: { opacity: 0.5 }
@@ -214,7 +202,7 @@ export default {
           {
             name: "MA30",
             type: "line",
-            data: this.calculateMA(30, data),
+            data: [],
             smooth: true,
             lineStyle: {
               normal: { opacity: 0.5 }
@@ -225,10 +213,33 @@ export default {
             type: "bar",
             xAxisIndex: 1,
             yAxisIndex: 1,
-            data: data.volumes
+            data: []
           }
         ]
-      });
+      }
+    };
+  },
+  watch: {
+    data(newval) {
+      var that = this;
+      if (newval.code == 1) {
+        that.rawData = newval.data;
+      } else if (newval.code == 2) {
+        that.rawData.splice(-1, 1, newval.data);
+      } else if (newval.code == 3) {
+        that.rawData.push(newval.data);
+        console.log(that.rawData);
+      }
+      var data = that.splitData(JSON.parse(JSON.stringify(that.rawData)));
+      that.option.xAxis[0].data = data.categoryData;
+      that.option.xAxis[1].data = data.categoryData;
+      that.option.series[0].data = data.values;
+      that.option.series[1].data = that.calculateMA(5, data);
+      that.option.series[2].data = that.calculateMA(10, data);
+      that.option.series[3].data = that.calculateMA(20, data);
+      that.option.series[4].data = that.calculateMA(30, data);
+      that.option.series[5].data = data.volumes;
+      that.drawKline(that.option);
     }
   },
   computed: {
@@ -241,17 +252,11 @@ export default {
       var categoryData = [];
       var values = [];
       var volumes = [];
-      
-        console.log(rawData)
       for (var i = 0; i < rawData.length; i++) {
-        var temp = rawData[i]
+        var temp = rawData[i];
         categoryData.push(temp.splice(0, 1)[0]);
         values.push(temp);
-        volumes.push([
-          i,
-          temp[4],
-          temp[0] > temp[1] ? 1 : -1
-        ]);
+        volumes.push([i, temp[4], temp[0] > temp[1] ? 1 : -1]);
       }
       return {
         categoryData: categoryData,
@@ -268,7 +273,7 @@ export default {
         }
         var sum = 0;
         for (var j = 0; j < dayCount; j++) {
-          sum += data.values[i - j][1];
+          sum += Number(data.values[i - j][1]);
         }
         result.push(+(sum / dayCount).toFixed(3));
       }
@@ -292,84 +297,10 @@ export default {
   mounted() {
     let that = this;
     that.myChart = echarts.init(document.getElementById("myChart"));
-    // that.drawKline(that.option);
+    that.myChart.on("datazoom", function(params) {
+      that.option.dataZoom[0].start = params.batch[0].start;
+      that.option.dataZoom[0].end = params.batch[0].end;
+    });
   }
 };
 </script>
-<style lang="less">
-.van-progress__portion {
-  border-radius: 10px 0 0 10px;
-}
-</style>
-
-<style lang="less" scoped>
-.box1 {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 15px 0;
-  dl {
-    text-align: center;
-    dt {
-      font-size: 13px;
-      font-weight: 400;
-      color: rgba(255, 255, 255, 1);
-      line-height: 24px;
-    }
-    dd {
-      font-size: 21px;
-      font-family: Bahnschrift-Regular;
-      font-weight: 400;
-      color: rgba(14, 189, 255, 1);
-      line-height: 24px;
-    }
-  }
-  .btn {
-    flex-shrink: 0;
-    width: 90px;
-    height: 30px;
-    line-height: 30px;
-  }
-}
-.box2 {
-  display: flex;
-  justify-content: space-around;
-  align-items: baseline;
-  padding: 15px 0;
-  h4 {
-    font-size: 25px;
-    color: rgba(0, 204, 0, 1);
-    line-height: 24px;
-  }
-  small {
-    font-size: 12px;
-    font-weight: 400;
-    color: rgba(0, 204, 0, 1);
-    line-height: 17px;
-  }
-  .selectMode {
-    font-size: 13px;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 1);
-    line-height: 25px;
-  }
-}
-.business {
-  padding: 5px 15px;
-  .text {
-    display: flex;
-    justify-content: space-between;
-    color: #fff;
-    margin-bottom: 5px;
-    font-size: 13px;
-    color: rgba(141, 154, 183, 1);
-    line-height: 25px;
-    .mai {
-      color: #ff2737;
-    }
-    .maii {
-      color: #00cc00;
-    }
-  }
-}
-</style>

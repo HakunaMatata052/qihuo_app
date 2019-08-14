@@ -45,9 +45,9 @@ const router = new Router({
           }
         },
         {
-          path: "/tradeIcon",
-          name: "tradeIcon",
-          component: () => import("@/views/index/subviews/tradeIcon.vue"),
+          path: "/position",
+          name: "position",
+          component: () => import("@/views/index/subviews/position.vue"),
           meta: {
             keepAlive: true,
             isTransition: true,
@@ -211,6 +211,18 @@ const router = new Router({
         keepAlive: false,
         isTransition: true,
         title: "精彩活动",
+        isMember: false,
+        isLogin: false
+      }
+    },
+    {
+      path: "/trade/:type?",
+      name: "trade",
+      component: () => import("@/views/quotation/trade.vue"),
+      meta: {
+        keepAlive: false,
+        isTransition: true,
+        title: "买入委托",
         isMember: false,
         isLogin: false
       }

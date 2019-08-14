@@ -9,7 +9,7 @@
           clearable
           label="旧密码"
           placeholder="请输入旧密码"
-          type="tel"
+            type="password"
         />
         <van-field
           v-model="form.bank_card_number"
@@ -17,7 +17,7 @@
           clearable
           label="新密码"
           placeholder="请输入新密码"
-          type="tel"
+            type="password"
         />
         <van-field
           v-model="form.bank_card_number"
@@ -25,7 +25,7 @@
           clearable
           label="确认密码"
           placeholder="请输入确认密码"
-          type="tel"
+            type="password"
         />
       </van-cell-group>
       <div class="submit">

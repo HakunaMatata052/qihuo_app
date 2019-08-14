@@ -19,7 +19,8 @@ export default new Vuex.Store({
       lat:108.222
     },  //用户定位
     qiniuaddr: "http://95youhe.com/",  //七牛地址
-    webSocket: "ws://139.159.132.117:13811",    
+    // webSocket: "ws://139.159.132.117:13811",   
+    webSocket: "ws://192.168.0.107:8080",     
     nameList:{
       "IF":"沪深",
       "IH":"上证",

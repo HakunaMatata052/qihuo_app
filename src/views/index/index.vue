@@ -43,7 +43,7 @@ export default {
         },
         {
           title: "持仓",
-          path: "/tradeIcon",
+          path: "/position",
           icon: "tradeIcon",
           icon_press: "tradeIcon-active",
           index: 2

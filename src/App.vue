@@ -191,7 +191,15 @@ export default {
     sans-serif;
   height: 100%;
 }
-[class*='van-hairline']::after {
+.van-stepper__input {
+  margin: 0 -1px;
+}
+.van-stepper__minus,
+.van-stepper__plus,
+.van-stepper__input {
+  border: 1px solid #8d9ab7;
+}
+[class*="van-hairline"]::after {
   border-color: #000;
 }
 .van-grid-item__content {

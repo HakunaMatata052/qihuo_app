@@ -67,8 +67,23 @@ class Api extends Axios {
   async findList(params = {}) {
     return await this.axios("POST", "publiccon/index", params)
   }
+  // 精彩活动状态
+  async giveIndex(params = {}) {
+    return await this.axios("POST", "money/give_index", params)
+  }
+  // 签到
+  async signadd(params = {}) {
+    return await this.axios("POST", "money/signadd", params)
+  }
+  // 新人礼
+  async resultGive(params = {}) {
+    return await this.axios("POST", "Money/result_give", params)
+  }  
   
-  
+  // 新人礼
+  async actionDetail(params = {}) {
+    return await this.axios("POST", "stock/actionDetail", params)
+  }  
 }
 
 export default new Api();
